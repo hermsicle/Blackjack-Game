@@ -83,3 +83,44 @@
     color: white;
     transition: color .3s ease-in;
 }
+
+/* Information section *********************** */
+.information-container {
+    width: 100%;
+    position: relative;
+    height: 250px;
+    margin-top: 25px;
+}
+.information-container-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+.information-container-inner h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin: 20px;
+}
+.information-ul-container {
+    /* border: 1px solid black; */
+    width: 80%;
+    margin: 0 auto;
+}
+.information-ul {
+    list-style: disc;
+    margin-left: 80px;
+}
+.information-ul li {
+    font-family: 'Bitter', serif;
+    font-size: 1.25rem;
+    font-weight: 100;
+    margin: 20px;
+}
+
+/* Game container style ******************** */
+.game-container {
+    width: 100%;
+}
+.game-container-inner {
+    max-width: 1200px;
+}
