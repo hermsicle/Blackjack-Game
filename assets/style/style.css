@@ -126,3 +126,42 @@
     margin: 0 auto;
     background-color: #2ecc71;
 }
+.cards {
+    height: 250px;
+    width: 180px;
+}
+.container {
+    margin: 10px auto;
+    width: 500px;
+}
+.dealer-container {
+    border: 1px solid white;
+}
+.bet-container {
+    border: 2px solid black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.bet-container .bet-button {
+    padding: 10px 25px;
+    width: 100px;
+    font-size: 1.25rem;
+}
+.player-container {
+    border: 1px solid blue;
+}
+.chips-container {
+    border: 2px solid grey;
+}
+.chips-container-inner {
+    display: flex;
+    justify-content: space-between;
+}
+.chips {
+    border: 1px solid black;
+    width: 100px;
+    text-align: center;
+    padding: 25px;
+    cursor: pointer;
+}
