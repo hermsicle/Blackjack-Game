@@ -87,8 +87,6 @@
 /* Information section *********************** */
 .information-container {
     width: 100%;
-    position: relative;
-    height: 250px;
     margin-top: 25px;
 }
 .information-container-inner {
@@ -102,7 +100,7 @@
     margin: 20px;
 }
 .information-ul-container {
-    /* border: 1px solid black; */
+    border: 1px solid black;
     width: 80%;
     margin: 0 auto;
 }
@@ -120,7 +118,11 @@
 /* Game container style ******************** */
 .game-container {
     width: 100%;
+    margin-top: 25px;
 }
 .game-container-inner {
     max-width: 1200px;
+    /* height: 800px; */
+    margin: 0 auto;
+    background-color: #2ecc71;
 }

@@ -47,10 +47,42 @@
 
     <div class="game-container">
         <div class="game-container-inner">
-            <div class="dealer-container"></div>
-            <div class="bet-container"></div>
-            <div class="player-container"></div>
-            <div class="chips-container"></div>
+
+            <div class="dealer-container">
+                <div class="dealer-container-inner">
+                    <h2>Dealer: <span id="dealer-total"></span></h2>
+                    <div class="dealer-cards-container">
+                        <img class="cards" src="./assets/photos/cards/clubs_10.png" alt="card">
+                        <img class="cards" src="./assets/photos/cards/clubs_2.png" alt="card">
+                    </div>
+                </div>
+            </div>
+
+            <div class="bet-container">
+                <button id="hit-button">Hit</button>
+                <h2>$<span id="chips-wagered">100</span></h2>
+                <button id="stand-button">Stand</button>
+            </div>
+
+            <div class="player-container">
+                <div class="player-container-inner">
+                    <h2>Player: <span id="player-total"></span></h2>
+                    <div class="player-cards-container">
+                        <img class="cards" src="./assets/photos/cards/clubs_8.png" alt="card">
+                        <img class="cards" src="./assets/photos/cards/clubs_6.png" alt="card">
+                    </div>
+                </div>
+            </div>
+
+            <div class="chips-container">
+                <div class="chips-container-inner">
+                    <h2>$<span id="chips-5">5</span></h2>
+                    <h2>$<span id="chips-10">10</span></h2>
+                    <h2>$<span id="chips-25">25</span></h2>
+                    <h2>$<span id="chips-50">50</span></h2>
+                </div>
+            </div>
+            
         </div>
     </div>
 
