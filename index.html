@@ -39,7 +39,7 @@
                     <li>If you go over 21 you bust, and the dealer wins regardless of the dealer's hand.</li>
                     <li>If you are dealt 21 from the start (Ace & 10), you got a blackjack.</li>
                     <li>Dealer will hit until his/her cards total 17 or higher.</li>
-                    <li>Split can be done when you have two of the same card - the pair is split into two hands.</li>
+                    <!-- <li>Split can be done when you have two of the same card - the pair is split into two hands.</li> -->
                 </ul>
             </div>
         </div>
@@ -52,15 +52,13 @@
                 <div class="dealer-container-inner">
                     <h2>Dealer: <span id="dealer-total"></span></h2>
                     <div class="dealer-cards-container">
-                        <img class="cards" src="./assets/photos/cards/clubs_10.png" alt="card">
-                        <img class="cards" src="./assets/photos/cards/clubs_2.png" alt="card">
                     </div>
                 </div>
             </div>
 
             <div class="bet-container container">
                 <button class="bet-button" id="hit-button">Hit</button>
-                <h2>$<span id="chips-wagered">100</span></h2>
+                <h2>$<span id="chips-wagered"></span></h2>
                 <button class="bet-button" id="stand-button">Stand</button>
             </div>
 
@@ -68,24 +66,31 @@
                 <div class="player-container-inner">
                     <h2>Player: <span id="player-total"></span></h2>
                     <div class="player-cards-container">
-                        <img class="cards" src="./assets/photos/cards/clubs_8.png" alt="card">
-                        <img class="cards" src="./assets/photos/cards/clubs_6.png" alt="card">
                     </div>
                 </div>
             </div>
 
             <div class="chips-container container">
                 <div class="chips-container-inner">
-                    <h2 class="chips">$<span id="chips-5">5</span></h2>
-                    <h2 class="chips">$<span id="chips-10">10</span></h2>
-                    <h2 class="chips">$<span id="chips-25">25</span></h2>
-                    <h2 class="chips">$<span id="chips-50">50</span></h2>
+                    <button class="chips chips-5">5</button>
+                    <button class="chips chips-10">10</button>
+                    <button class="chips chips25">25</button>
+                    <button class="chips chips-30">50</button>
+                </div>
+                <div class="total-chips-container">
+                    <h2>Total $<span id="total-chips">500</span></h2>
                 </div>
             </div>
 
+            <div class="start-container container">
+                <button id="startButton">Start</button>
+                <button id="restartButton">Retart</button>
+            </div>
+            
         </div>
     </div>
 
     <script src="./assets/js/app.js"></script>
+    <!-- axios cdn -->
 </body>
 </html>
