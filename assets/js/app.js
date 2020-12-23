@@ -1,5 +1,5 @@
 const startButton = document.querySelector('#startButton');
-const resterButton = document.querySelectorAll('#restartButton');
+const restartButton = document.querySelector('#restartButton');
 const chipsWagered = document.querySelector('#chips-wagered');
 const chips = document.querySelectorAll('.chips');
 const totalChips = document.querySelector('#total-chips');
@@ -8,29 +8,30 @@ const playerCardsSection = document.querySelector('.player-cards-container');
 const dealerTotalSpan = document.getElementById('dealer-total');
 const playerTotalSpan = document.getElementById('player-total');
 const hitButton = document.getElementById('hit-button');
+const standButton = document.getElementById('stand-button');
 
 let currentChip = 0;
 let dealerTotal = 0;
 let playerTotal = 0;
 
-let dealerCard1Value;
-let dealerCard2Value;
+let dealerCard1;
+let dealerCard2;
+let dealerCard1Value;   //ParsedInt of dealerCard
+let dealerCard2Value;   //ParsedInt of dealerCard
+let newDealerCard = 0;
 
-let playerCard1Value;
-let playerCard2Value;
+let playerCard1;
+let playerCard2;
+let playerCard1Value;   //ParsedInt of playerCard
+let playerCard2Value;   //ParsedInt of playerCard
+let newPlayerCard = 0;
 
 let shuffledArrDealer;
 let shuffledArrPlayer;
 
-let dealerCard1;
-let dealerCard2;
-let dealerCard3;
-let dealerCard4;
-let dealerCard;
 
-let playerCard1;
-let playerCard2;
-let newPlayerCard = 0;
+
+let timer;
 
 const getChipsWagered = () => {
     chips.forEach(index => {
@@ -49,8 +50,8 @@ let cardsArray = [
     "spades_ace", "spades_2", "spades_3", "spades_4", "spades_5", "spades_6", "spades_7", "spades_8", "spades_9", "spades_jack", "spades_queen", "spades_king",
     "hearts_ace", "hearts_2", "hearts_3", "hearts_4", "hearts_5", "hearts_6", "hearts_7", "hearts_8", "hearts_9", "hearts_jack", "hearts_queen", "hearts_king"
 ]
-
-const checkNum = (str) => {
+//Checks Players Card on 'HIT'
+const checkNumPlayer = (str) => {
     if( (str.includes('king')) || (str.includes('queen')) || (str.includes('jack')) )  newPlayerCard = 10
     else if( str.includes('ace') )  newPlayerCard = 1
     else if( str.includes('2') )  newPlayerCard = 2
@@ -62,7 +63,20 @@ const checkNum = (str) => {
     else if( str.includes('8') )  newPlayerCard = 8
     else if( str.includes('9') )  newPlayerCard = 9 
 }
-
+//Checks Dealers Card on 'STAND'
+const checkNumDealer = (str) => {
+    if( (str.includes('king')) || (str.includes('queen')) || (str.includes('jack')) )  newDealerCard = 10
+    else if( str.includes('ace') )  newDealerCard = 1
+    else if( str.includes('2') )  newDealerCard = 2
+    else if( str.includes('3') )  newDealerCard = 3
+    else if( str.includes('4') )  newDealerCard = 4
+    else if( str.includes('5') )  newDealerCard = 5
+    else if( str.includes('6') )  newDealerCard = 6
+    else if( str.includes('7') )  newDealerCard = 7
+    else if( str.includes('8') )  newDealerCard = 8
+    else if( str.includes('9') )  newDealerCard = 9 
+}
+//Shuffles the cardsArrayForDealer
 const shuffleCardsDealer = (a) => {
     for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -74,7 +88,7 @@ const shuffleCardsDealer = (a) => {
     dealerCard2 = shuffledArrDealer[1]
 
     if( dealerCard1.includes('king') || dealerCard1.includes('queen') || dealerCard1.includes('jack') ) dealerCard1Value = 10;
-    if( dealerCard1.includes('ace') ) dealerCard1Value = 1;
+    if( dealerCard1.includes('ace') ) dealerCard1Value = 11 || 1;
     if( dealerCard1.includes('2') ) dealerCard1Value = 2;
     if( dealerCard1.includes('3') ) dealerCard1Value = 3;
     if( dealerCard1.includes('4') ) dealerCard1Value = 4;
@@ -86,7 +100,7 @@ const shuffleCardsDealer = (a) => {
     // console.log('Dealers 1st card: ' + dealerCard1Value)
 
     if( dealerCard2.includes('king') || dealerCard2.includes('queen') || dealerCard2.includes('jack') ) dealerCard2Value = 10;
-    if( dealerCard2.includes('ace') ) dealerCard2Value = 1;
+    if( dealerCard2.includes('ace') ) dealerCard2Value = 11 || 1;
     if( dealerCard2.includes('2') ) dealerCard2Value = 2;
     if( dealerCard2.includes('3') ) dealerCard2Value = 3;
     if( dealerCard2.includes('4') ) dealerCard2Value = 4;
@@ -99,15 +113,24 @@ const shuffleCardsDealer = (a) => {
 
     dealerCardsSection.innerHTML += `
         <img src="./assets/photos/cards/${shuffledArrDealer[0]}.png" class="cards">
-        <img src="./assets/photos/cards/card_back.png" class="cards">
+        <div class="flip-container">
+        <div class="card">
+            <div class="card-front" id="card">
+                <img src="./assets/photos/cards/card_back.png" class="cards">
+            </div>
+            <div class="card-back">
+                <img src="./assets/photos/cards/${shuffledArrDealer[1]}.png" class="cards">
+            </div>
+        </div>
     `
-    // dealerTotal = dealerCard1Value + dealerCard2Value;
-    // console.log(dealerTotal)
+    dealerTotal = dealerCard1Value + dealerCard2Value;
+    // console.log('Dealer has: ' + dealerTotal)
     // dealerTotalSpan.textContent = dealerTotal;
+
 }
 shuffleCardsDealer(cardsArray)
 
-
+//Shuffles the CardsArray for Player
 const shuffleCardsPlayer = (a) => {
     for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -119,7 +142,7 @@ const shuffleCardsPlayer = (a) => {
     playerCard2 = shuffledArrPlayer[1]
 
     if( playerCard1.includes('king') || playerCard1.includes('queen') || playerCard1.includes('jack') ) playerCard1Value = 10;
-    if( playerCard1.includes('ace') ) playerCard1Value = 1;
+    if( playerCard1.includes('ace') ) playerCard1Value = 11 || 1;
     if( playerCard1.includes('2') ) playerCard1Value = 2;
     if( playerCard1.includes('3') ) playerCard1Value = 3;
     if( playerCard1.includes('4') ) playerCard1Value = 4;
@@ -131,7 +154,7 @@ const shuffleCardsPlayer = (a) => {
     // console.log('players 1st card: ' + playerCard1Value)
 
     if( playerCard2.includes('king') || playerCard2.includes('queen') || playerCard2.includes('jack') ) playerCard2Value = 10;
-    if( playerCard2.includes('ace') ) playerCard2Value = 1;
+    if( playerCard2.includes('ace') ) playerCard2Value = 11 || 1;
     if( playerCard2.includes('2') ) playerCard2Value = 2;
     if( playerCard2.includes('3') ) playerCard2Value = 3;
     if( playerCard2.includes('4') ) playerCard2Value = 4;
@@ -147,14 +170,11 @@ const shuffleCardsPlayer = (a) => {
     <img src="./assets/photos/cards/${shuffledArrPlayer[1]}.png" class="cards">
 `
     playerTotal = playerCard1Value + playerCard2Value;
-    console.log('Player has: ' + playerTotal)
+    // console.log('Player has: ' + playerTotal)
     playerTotalSpan.textContent = playerTotal;
 }
 shuffleCardsPlayer(cardsArray)
 
-startButton.addEventListener('click', () => {
-
-})
 
 //Create function that gets a card if hit is pressed
 hitButton.addEventListener('click', () => {
@@ -167,12 +187,69 @@ hitButton.addEventListener('click', () => {
     playerCardsSection.innerHTML  += `<img src="./assets/photos/cards/${hitCard}.png" class="cards">`
 
     //Convert the hitCard to a number
-    checkNum(hitCard)
+    checkNumPlayer(hitCard)
 
     console.log(newPlayerCard)
     playerTotal += newPlayerCard
     console.log(playerTotal)
     playerTotalSpan.textContent = playerTotal;
+
+    if(playerTotal === 21) alert('BLACKJACK')
+
+    if(playerTotal > 21) {
+        console.log('You Have Went Over 21')
+
+        //Restart Game ()
+    }
 })
 
+//StandButton Logic
+standButton.addEventListener('click', () => {
 
+    //Reveal Dealers Second Face Down Card
+    const cardFront = document.getElementById('card')
+    cardFront.style.transform = 'rotateY(180deg)'
+    // console.log('Dealer has total of : ' + dealerTotal)
+    dealerTotalSpan.textContent = dealerTotal;
+
+
+
+    //Condition where Dealer and Player has a Tie:
+    if(dealerTotal === 21) {
+        alert('Dealer Has Hit BlackJack!')
+    }
+    else if(dealerTotal === playerTotal) {
+        console.log('TIE')
+    }
+    else if (dealerTotal > playerTotal) {
+        console.log('Dealer Won')
+    } else {
+        console.log('Player Won!!')
+    }
+})
+
+//Create a function that checks the dealerTotal after stand is initialized
+const checkDealerAfterStand = () => {
+    let randomIndex = Math.floor(Math.random() * shuffledArrDealer.length)
+    let randomCard = shuffledArrDealer[randomIndex]
+    console.log(randomCard)
+    checkNumDealer(randomCard)
+    console.log(newDealerCard)
+
+
+}
+
+
+// startButton.addEventListener('click', () => {
+//     shuffleCardsDealer(cardsArray)
+//     shuffleCardsPlayer(cardsArray)
+//     startButton.style.display = 'none'
+// })
+
+// restartButton.addEventListener('click', () => {
+//     startButton.style.display = 'block';
+//     dealerCardsSection.innerHTML = '';
+//     playerCardsSection.innerHTML = '';
+//     dealerTotalSpan.innerHTML = '';
+//     playerTotalSpan.innerHTML = '';
+// })
