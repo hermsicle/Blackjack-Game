@@ -1,4 +1,4 @@
-const startButton = document.querySelector('#startButton');
+const startButton = document.querySelector('#deal-button');
 const restartButton = document.querySelector('#restartButton');
 const chipsWagered = document.querySelector('#chips-wagered');
 const chips = document.querySelectorAll('.chips');
@@ -9,10 +9,14 @@ const dealerTotalSpan = document.getElementById('dealer-total');
 const playerTotalSpan = document.getElementById('player-total');
 const hitButton = document.getElementById('hit-button');
 const standButton = document.getElementById('stand-button');
+const dealButton = document.getElementById('deal-button');
 
 const dealerNewCardSection = document.querySelector('.dealer-new-cards');
 
 let currentChip = 0;
+let playerTotalChips = 500;
+let selectedChip;
+
 let dealerTotal = 0;
 let playerTotal = 0;
 
@@ -36,9 +40,11 @@ let timer;
 const getChipsWagered = () => {
     chips.forEach(index => {
         index.addEventListener('click', () => {
-            let selectedChip = parseInt(index.innerHTML);
+            selectedChip = parseInt(index.innerHTML);
             currentChip = selectedChip + currentChip;
+            playerTotalChips = playerTotalChips - selectedChip;
             chipsWagered.textContent = currentChip;
+            totalChips.textContent = playerTotalChips;
         })
     })
 }
@@ -182,24 +188,39 @@ hitButton.addEventListener('click', () => {
     let newCardIndex = Math.floor(Math.random() * shuffledArrPlayer.length)
 
     let hitCard = shuffledArrPlayer[newCardIndex];
-    console.log('Players hit card: ' + hitCard)
+    // console.log('Players hit card: ' + hitCard)
 
     playerCardsSection.innerHTML  += `<img src="./assets/photos/cards/${hitCard}.png" class="cards">`
 
     //Convert the hitCard to a number
     checkNumPlayer(hitCard)
 
-    console.log(newPlayerCard)
+    // console.log(newPlayerCard)
     playerTotal += newPlayerCard
-    console.log(playerTotal)
+    // console.log(playerTotal)
     playerTotalSpan.textContent = playerTotal;
 
-    if(playerTotal === 21) alert('BLACKJACK')
+    if(playerTotal === 21) {
+        alert('BLACKJACK');
+        const cardFront = document.getElementById('card')
+        cardFront.style.transform = 'rotateY(180deg)'
+        dealerTotalSpan.textContent = dealerTotal;
+        playerTotalChips = playerTotalChips + (selectedChip * 2);
+        totalChips.textContent = playerTotalChips;
 
-    if(playerTotal > 21) {
+        if(dealerTotal !== 21) {
+            selectedChip = 0;
+            chipsWagered.textContent = selectedChip;
+        }
+    }
+
+    else if(playerTotal > 21) {
         console.log('You Have Went Over 21')
         alert('You have busted!')
-        // timer = setTimeout(restart, 3000);
+        selectedChip = 0;
+        chipsWagered.textContent = selectedChip;
+        playerTotalChips = playerTotalChips + (selectedChip * 2);
+        totalChips.textContent = playerTotalChips;
     }
 })
 
@@ -208,13 +229,13 @@ const drawCardDealer = (num) => {
     let randomShuffledCard;
 
     while(num <= targetNum){
-        console.log(num) 
+        // console.log(num) 
         if(num >= targetNum) {
             break;
         }            
         const randomIndex = Math.floor(Math.random() * shuffledArrDealer.length);
         randomShuffledCard = shuffledArrDealer[randomIndex];
-        console.log(randomShuffledCard)
+        // console.log(randomShuffledCard)
         checkNumDealer(randomShuffledCard);
         dealerCardsSection.innerHTML  += `
         <img src="./assets/photos/cards/${randomShuffledCard}.png" class="cards">
@@ -222,9 +243,9 @@ const drawCardDealer = (num) => {
         // dealerCardsSection.innerHTML += randomShuffledCard;
         num += newDealerCard;
     }
-    console.log('New Dealer Total is: ' + num) 
+    // console.log('New Dealer Total is: ' + num) 
     dealerTotalSpan.textContent = num;
-    
+    dealerTotal = num;
 }
 
 //StandButton Logic
@@ -237,23 +258,37 @@ standButton.addEventListener('click', () => {
     dealerTotalSpan.textContent = dealerTotal;
 
     if(dealerTotal < 17) {
-        //Dealer needs to keep drawing until they get 17 or up 
         drawCardDealer(dealerTotal)
     }
+    
+    console.log('Dealer Total is: ' + dealerTotal)
+    console.log('Player Total Is: ' + playerTotal)
 
-
-    // Condition where Dealer and Player has a Tie:
     if(dealerTotal === 21) {
-        alert('Dealer Has Hit BlackJack!')
+        alert('Dealer Has Hit BlackJack!');
+        currentChip = 0;
+        chipsWagered.textContent = currentChip;
+    }
+    else if (dealerTotal > 21) {
+        console.log('Dealer Lost')
+        currentChip = 0;
+        chipsWagered.textContent = currentChip;
+        playerTotalChips = playerTotalChips + (selectedChip * 2);
+        totalChips.textContent = playerTotalChips;
+    } 
+    else if ( playerTotal > dealerTotal) {
+        console.log('Player Won!!')
+        playerTotalChips = playerTotalChips + (selectedChip * 2);
+        currentChip = 0;
+        totalChips.textContent = playerTotalChips;
+        chipsWagered.textContent = currentChip
     }
     else if(dealerTotal === playerTotal) {
         console.log('TIE')
-    }
-    else if (dealerTotal > playerTotal) {
-        console.log('Dealer Won')
-
-    } else {
-        console.log('Player Won!!')
+        currentChip = 0;
+        chipsWagered.textContent = currentChip;
+        playerTotalChips = playerTotalChips + selectedChip;
+        totalChips.textContent = playerTotalChips;
     }
 })
 
@@ -261,11 +296,9 @@ startButton.addEventListener('click', () => {
     restart();
     shuffleCardsDealer(cardsArray)
     shuffleCardsPlayer(cardsArray)
-    // startButton.style.display = 'none'
 })
 
 restartButton.addEventListener('click', () => {
-    // startButton.style.display = 'block';
     dealerCardsSection.innerHTML = '';
     playerCardsSection.innerHTML = '';
     dealerTotalSpan.innerHTML = '';
@@ -273,7 +306,6 @@ restartButton.addEventListener('click', () => {
 })
 
 const restart = () => {
-    // startButton.style.display = 'block';
     dealerCardsSection.innerHTML = '';
     playerCardsSection.innerHTML = '';
     dealerTotalSpan.innerHTML = '';

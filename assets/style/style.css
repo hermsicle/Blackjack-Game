@@ -96,7 +96,7 @@
 .information-container-inner {
     max-width: 1200px;
     margin: 0 auto;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 .information-container-inner h2 {
     text-align: center;
@@ -104,7 +104,6 @@
     margin: 20px;
 }
 .information-ul-container {
-    border: 1px solid black;
     width: 80%;
     margin: 0 auto;
 }
@@ -122,13 +121,14 @@
 /* Game container style ******************** */
 .game-container {
     width: 100%;
-    margin-top: 25px;
 }
 .game-container-inner {
     max-width: 1200px;
     /* height: 800px; */
-    margin: 0 auto;
+    margin: 25px auto;
     background-color: #2ecc71;
+    border-radius: 50px;
+    border: 10px solid black;
 }
 .start-container {
     border: 1px solid black;
@@ -220,4 +220,20 @@
     cursor: pointer;
     font-size: 1.5rem;
     font-family: 'Bitter', serif;
+}
+.total-chips-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.deal-container {
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+#deal-button {
+    padding:10px 25px;
+    font-size: 1.5rem;
 }
