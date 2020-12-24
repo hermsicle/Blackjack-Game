@@ -128,7 +128,7 @@ const shuffleCardsDealer = (a) => {
     // dealerTotalSpan.textContent = dealerTotal;
 
 }
-shuffleCardsDealer(cardsArray)
+// shuffleCardsDealer(cardsArray)
 
 //Shuffles the CardsArray for Player
 const shuffleCardsPlayer = (a) => {
@@ -173,7 +173,7 @@ const shuffleCardsPlayer = (a) => {
     // console.log('Player has: ' + playerTotal)
     playerTotalSpan.textContent = playerTotal;
 }
-shuffleCardsPlayer(cardsArray)
+// shuffleCardsPlayer(cardsArray)
 
 
 //Create function that gets a card if hit is pressed
@@ -208,7 +208,7 @@ const drawCardDealer = (num) => {
     let randomShuffledCard;
 
     while(num <= targetNum){
-        console.log(num, dealerTotal) 
+        console.log(num) 
         if(num >= targetNum) {
             break;
         }            
@@ -222,7 +222,7 @@ const drawCardDealer = (num) => {
         // dealerCardsSection.innerHTML += randomShuffledCard;
         num += newDealerCard;
     }
-    console.log(num, dealerTotal) 
+    console.log('New Dealer Total is: ' + num) 
     dealerTotalSpan.textContent = num;
     
 }
@@ -243,36 +243,37 @@ standButton.addEventListener('click', () => {
 
 
     // Condition where Dealer and Player has a Tie:
-    // if(dealerTotal === 21) {
-    //     alert('Dealer Has Hit BlackJack!')
-    // }
-    // else if(dealerTotal === playerTotal) {
-    //     console.log('TIE')
-    // }
-    // else if (dealerTotal > playerTotal) {
-    //     console.log('Dealer Won')
+    if(dealerTotal === 21) {
+        alert('Dealer Has Hit BlackJack!')
+    }
+    else if(dealerTotal === playerTotal) {
+        console.log('TIE')
+    }
+    else if (dealerTotal > playerTotal) {
+        console.log('Dealer Won')
 
-    // } else {
-    //     console.log('Player Won!!')
-    // }
+    } else {
+        console.log('Player Won!!')
+    }
 })
 
-// startButton.addEventListener('click', () => {
-//     shuffleCardsDealer(cardsArray)
-//     shuffleCardsPlayer(cardsArray)
-//     startButton.style.display = 'none'
-// })
+startButton.addEventListener('click', () => {
+    restart();
+    shuffleCardsDealer(cardsArray)
+    shuffleCardsPlayer(cardsArray)
+    // startButton.style.display = 'none'
+})
 
-// restartButton.addEventListener('click', () => {
-//     startButton.style.display = 'block';
-//     dealerCardsSection.innerHTML = '';
-//     playerCardsSection.innerHTML = '';
-//     dealerTotalSpan.innerHTML = '';
-//     playerTotalSpan.innerHTML = '';
-// })
+restartButton.addEventListener('click', () => {
+    // startButton.style.display = 'block';
+    dealerCardsSection.innerHTML = '';
+    playerCardsSection.innerHTML = '';
+    dealerTotalSpan.innerHTML = '';
+    playerTotalSpan.innerHTML = '';
+})
 
 const restart = () => {
-    startButton.style.display = 'block';
+    // startButton.style.display = 'block';
     dealerCardsSection.innerHTML = '';
     playerCardsSection.innerHTML = '';
     dealerTotalSpan.innerHTML = '';
