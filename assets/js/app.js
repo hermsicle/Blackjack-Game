@@ -45,6 +45,9 @@ const getChipsWagered = () => {
             playerTotalChips = playerTotalChips - selectedChip;
             chipsWagered.textContent = currentChip;
             totalChips.textContent = playerTotalChips;
+            console.log(selectedChip)
+            console.log(playerTotalChips)
+            console.log(currentChip)
         })
     })
 }
@@ -176,6 +179,14 @@ const shuffleCardsPlayer = (a) => {
     <img src="./assets/photos/cards/${shuffledArrPlayer[1]}.png" class="cards">
 `
     playerTotal = playerCard1Value + playerCard2Value;
+    if(playerTotal === 21) {
+        alert('Player has BLACKJACK!');
+        const cardFront = document.getElementById('card')
+        cardFront.style.transform = 'rotateY(180deg)'
+        dealerTotalSpan.textContent = dealerTotal;
+        playerTotalChips = playerTotalChips + (selectedChip * 2);
+        totalChips.textContent = playerTotalChips;
+    }
     // console.log('Player has: ' + playerTotal)
     playerTotalSpan.textContent = playerTotal;
 }
@@ -205,7 +216,7 @@ hitButton.addEventListener('click', () => {
         const cardFront = document.getElementById('card')
         cardFront.style.transform = 'rotateY(180deg)'
         dealerTotalSpan.textContent = dealerTotal;
-        playerTotalChips = playerTotalChips + (selectedChip * 2);
+        playerTotalChips += (currentChip * 2);
         totalChips.textContent = playerTotalChips;
 
         if(dealerTotal !== 21) {
@@ -219,7 +230,7 @@ hitButton.addEventListener('click', () => {
         alert('You have busted!')
         selectedChip = 0;
         chipsWagered.textContent = selectedChip;
-        playerTotalChips = playerTotalChips + (selectedChip * 2);
+        playerTotalChips = playerTotalChips + (currentChip * 2);
         totalChips.textContent = playerTotalChips;
     }
 })
@@ -266,36 +277,45 @@ standButton.addEventListener('click', () => {
 
     if(dealerTotal === 21) {
         alert('Dealer Has Hit BlackJack!');
-        currentChip = 0;
-        chipsWagered.textContent = currentChip;
+        selectedChip = 0;
+        chipsWagered.textContent = selectedChip;
     }
     else if (dealerTotal > 21) {
         console.log('Dealer Lost')
-        currentChip = 0;
-        chipsWagered.textContent = currentChip;
-        playerTotalChips = playerTotalChips + (selectedChip * 2);
+        selectedChip = 0;
+        chipsWagered.textContent = selectedChip;
+        playerTotalChips = playerTotalChips + (currentChip * 2);
         totalChips.textContent = playerTotalChips;
     } 
     else if ( playerTotal > dealerTotal) {
         console.log('Player Won!!')
-        playerTotalChips = playerTotalChips + (selectedChip * 2);
-        currentChip = 0;
+        playerTotalChips = playerTotalChips + (currentChip * 2);
+        selectedChip = 0;
         totalChips.textContent = playerTotalChips;
-        chipsWagered.textContent = currentChip
+        chipsWagered.textContent = selectedChip
     }
     else if(dealerTotal === playerTotal) {
         console.log('TIE')
-        currentChip = 0;
-        chipsWagered.textContent = currentChip;
-        playerTotalChips = playerTotalChips + selectedChip;
+        selectedChip = 0;
+        chipsWagered.textContent = selectedChip;
+        playerTotalChips = playerTotalChips + (currentChip * 2);
         totalChips.textContent = playerTotalChips;
+    }
+    else if(dealerTotal > playerTotal && dealerTotal <= 21 ){
+        console.log('Dealer Won!');
+        currentChip = 0;
+        chipsWagered.textContent = selectedChip;
     }
 })
 
 startButton.addEventListener('click', () => {
-    restart();
-    shuffleCardsDealer(cardsArray)
-    shuffleCardsPlayer(cardsArray)
+    if(currentChip !== 0) {
+        restart();
+        shuffleCardsDealer(cardsArray)
+        shuffleCardsPlayer(cardsArray)
+    } else {
+        alert('Place A Bet')
+    }
 })
 
 restartButton.addEventListener('click', () => {

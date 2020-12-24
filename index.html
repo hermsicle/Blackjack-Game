@@ -48,33 +48,13 @@
     <div id="game" class="game-container">
         <div class="game-container-inner">
 
-            <div class="start-container container">
-                <!-- <button id="startButton">Start</button> -->
-                <button id="restartButton">Clear Table</button>
-            </div>
-
             <div class="dealer-container container">
                 <div class="dealer-container-inner">
                     <h2>Dealer : <span id="dealer-total"></span></h2>
                     <div class="dealer-cards-container">
-
-                        <!-- <div class="flip-container">
-                            <div class="card">
-                                <div class="card-front" id="card">
-                                </div>
-                                <div class="card-back">
-                                </div>
-                            </div>
-                        </div> -->
                         <div class="dealer-new-cards card"></div>
                     </div>
                 </div>
-            </div>
-
-            <div class="bet-container container">
-                <button class="bet-button" id="hit-button">Hit</button>
-                <h2>$<span id="chips-wagered"></span></h2>
-                <button class="bet-button" id="stand-button">Stand</button>
             </div>
 
             <div class="player-container container">
@@ -83,6 +63,12 @@
                     <div class="player-cards-container">
                     </div>
                 </div>
+            </div>
+
+            <div class="bet-container container">
+                <button class="bet-button" id="hit-button">Hit</button>
+                <h2>$<span id="chips-wagered"></span></h2>
+                <button class="bet-button" id="stand-button">Stand</button>
             </div>
 
             <div class="chips-container container">
@@ -103,11 +89,14 @@
                     <button id="deal-button">Deal</button>
                 </div>
             </div>
+
+            <div class="container">
+                <button id="restartButton">Clear Table</button>
+            </div>
             
         </div>
     </div>
 
     <script src="./assets/js/app.js"></script>
-    <!-- axios cdn -->
 </body>
 </html>

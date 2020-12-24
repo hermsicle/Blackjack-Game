@@ -130,11 +130,6 @@
     border-radius: 50px;
     border: 10px solid black;
 }
-.start-container {
-    border: 1px solid black;
-    display: flex;
-    justify-content: space-between;
-}
 #startButton,
 #restartButton {
     width: 200px;
