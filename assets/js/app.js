@@ -10,6 +10,8 @@ const playerTotalSpan = document.getElementById('player-total');
 const hitButton = document.getElementById('hit-button');
 const standButton = document.getElementById('stand-button');
 
+const dealerNewCardSection = document.querySelector('.dealer-new-cards');
+
 let currentChip = 0;
 let dealerTotal = 0;
 let playerTotal = 0;
@@ -28,8 +30,6 @@ let newPlayerCard = 0;
 
 let shuffledArrDealer;
 let shuffledArrPlayer;
-
-
 
 let timer;
 
@@ -198,10 +198,34 @@ hitButton.addEventListener('click', () => {
 
     if(playerTotal > 21) {
         console.log('You Have Went Over 21')
-
-        //Restart Game ()
+        alert('You have busted!')
+        // timer = setTimeout(restart, 3000);
     }
 })
+
+const drawCardDealer = (num) => {
+    let targetNum = 17;
+    let randomShuffledCard;
+
+    while(num <= targetNum){
+        console.log(num, dealerTotal) 
+        if(num >= targetNum) {
+            break;
+        }            
+        const randomIndex = Math.floor(Math.random() * shuffledArrDealer.length);
+        randomShuffledCard = shuffledArrDealer[randomIndex];
+        console.log(randomShuffledCard)
+        checkNumDealer(randomShuffledCard);
+        dealerCardsSection.innerHTML  += `
+        <img src="./assets/photos/cards/${randomShuffledCard}.png" class="cards">
+        `
+        // dealerCardsSection.innerHTML += randomShuffledCard;
+        num += newDealerCard;
+    }
+    console.log(num, dealerTotal) 
+    dealerTotalSpan.textContent = num;
+    
+}
 
 //StandButton Logic
 standButton.addEventListener('click', () => {
@@ -212,33 +236,26 @@ standButton.addEventListener('click', () => {
     // console.log('Dealer has total of : ' + dealerTotal)
     dealerTotalSpan.textContent = dealerTotal;
 
+    if(dealerTotal < 17) {
+        //Dealer needs to keep drawing until they get 17 or up 
+        drawCardDealer(dealerTotal)
+    }
 
 
-    //Condition where Dealer and Player has a Tie:
-    if(dealerTotal === 21) {
-        alert('Dealer Has Hit BlackJack!')
-    }
-    else if(dealerTotal === playerTotal) {
-        console.log('TIE')
-    }
-    else if (dealerTotal > playerTotal) {
-        console.log('Dealer Won')
-    } else {
-        console.log('Player Won!!')
-    }
+    // Condition where Dealer and Player has a Tie:
+    // if(dealerTotal === 21) {
+    //     alert('Dealer Has Hit BlackJack!')
+    // }
+    // else if(dealerTotal === playerTotal) {
+    //     console.log('TIE')
+    // }
+    // else if (dealerTotal > playerTotal) {
+    //     console.log('Dealer Won')
+
+    // } else {
+    //     console.log('Player Won!!')
+    // }
 })
-
-//Create a function that checks the dealerTotal after stand is initialized
-const checkDealerAfterStand = () => {
-    let randomIndex = Math.floor(Math.random() * shuffledArrDealer.length)
-    let randomCard = shuffledArrDealer[randomIndex]
-    console.log(randomCard)
-    checkNumDealer(randomCard)
-    console.log(newDealerCard)
-
-
-}
-
 
 // startButton.addEventListener('click', () => {
 //     shuffleCardsDealer(cardsArray)
@@ -253,3 +270,13 @@ const checkDealerAfterStand = () => {
 //     dealerTotalSpan.innerHTML = '';
 //     playerTotalSpan.innerHTML = '';
 // })
+
+const restart = () => {
+    startButton.style.display = 'block';
+    dealerCardsSection.innerHTML = '';
+    playerCardsSection.innerHTML = '';
+    dealerTotalSpan.innerHTML = '';
+    playerTotalSpan.innerHTML = '';
+    dealerTotal = 0;
+    playerTotal = 0;
+}
