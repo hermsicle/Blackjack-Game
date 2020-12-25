@@ -15,7 +15,7 @@ const winner = document.getElementById('winner');
 const dealerNewCardSection = document.querySelector('.dealer-new-cards');
 
 let currentChip = 0;
-let playerTotalChips = 500;
+let playerTotalChips = 1000;
 let selectedChip;
 
 let dealerTotal = 0;
@@ -45,15 +45,12 @@ const getChipsWagered = () => {
     chips.forEach(index => {
         index.addEventListener('click', () => {
             selectedChip = parseInt(index.innerHTML);
-            // console.log(selectedChip)
             currentChip = selectedChip + currentChip;
             playerTotalChips = playerTotalChips - selectedChip;
             chipsWagered.textContent = currentChip;
             totalChips.textContent = playerTotalChips;
-            // console.log(playerTotalChips + ' Chips Left')
 
             if(playerTotalChips < 1) {
-                // alert('No More Chips')
                 playerTotalChips = 0;
                 currentChip = currentChip * 1
                 totalChips.textContent = playerTotalChips;
@@ -97,6 +94,7 @@ const checkNumDealer = (str) => {
     else if( str.includes('8') )  newDealerCard = 8
     else if( str.includes('9') )  newDealerCard = 9 
 }
+
 //Shuffles the cardsArrayForDealer
 const shuffleCardsDealer = (a) => {
     for (let i = a.length - 1; i > 0; i--) {
@@ -145,11 +143,7 @@ const shuffleCardsDealer = (a) => {
         </div>
     `
     dealerTotal = dealerCard1Value + dealerCard2Value;
-    // console.log('Dealer has: ' + dealerTotal)
-    // dealerTotalSpan.textContent = dealerTotal;
-
 }
-// shuffleCardsDealer(cardsArray)
 
 //Shuffles the CardsArray for Player
 const shuffleCardsPlayer = (a) => {
@@ -202,13 +196,9 @@ const shuffleCardsPlayer = (a) => {
     playerTotalSpan.textContent = playerTotal;
 }
 
-//Create function that gets a card if hit is pressed
 hitButton.addEventListener('click', () => {
-
     let newCardIndex = Math.floor(Math.random() * shuffledArrPlayer.length)
-
     let hitCard = shuffledArrPlayer[newCardIndex];
-    // console.log('Players hit card: ' + hitCard)
 
     playerCardsSection.innerHTML  += `<img src="./assets/photos/cards/${hitCard}.png" class="cards">`
 
@@ -222,7 +212,6 @@ hitButton.addEventListener('click', () => {
 
     if(playerTotal === 21) {
         chips.forEach(btn => btn.disabled = false)
-        // alert('BLACKJACK');
         const cardFront = document.getElementById('card')
         cardFront.style.transform = 'rotateY(180deg)'
         dealerTotalSpan.textContent = dealerTotal;
@@ -261,18 +250,15 @@ const drawCardDealer = (num) => {
     let randomShuffledCard;
 
     while(num <= targetNum){
-        // console.log(num) 
         if(num >= targetNum) {
             break;
         }            
         const randomIndex = Math.floor(Math.random() * shuffledArrDealer.length);
         randomShuffledCard = shuffledArrDealer[randomIndex];
-        // console.log(randomShuffledCard)
         checkNumDealer(randomShuffledCard);
         dealerCardsSection.innerHTML  += `
         <img src="./assets/photos/cards/${randomShuffledCard}.png" class="cards">
         `
-        // dealerCardsSection.innerHTML += randomShuffledCard;
         num += newDealerCard;
     }
     // console.log('New Dealer Total is: ' + num) 
@@ -282,7 +268,6 @@ const drawCardDealer = (num) => {
 
 //StandButton Logic
 standButton.addEventListener('click', () => {
-
     //Reveal Dealers Second Face Down Card
     const cardFront = document.getElementById('card')
     cardFront.style.transform = 'rotateY(180deg)'
@@ -294,11 +279,10 @@ standButton.addEventListener('click', () => {
         drawCardDealer(dealerTotal)
     }
     
-    console.log('Dealer Total is: ' + dealerTotal)
-    console.log('Player Total Is: ' + playerTotal)
+    // console.log('Dealer Total is: ' + dealerTotal)
+    // console.log('Player Total Is: ' + playerTotal)
 
     if(dealerTotal === 21) {
-        // alert('Dealer Has Hit BlackJack!');
         chips.forEach(btn => btn.disabled = false)
         selectedChip = 0;
         chipsWagered.textContent = selectedChip;
