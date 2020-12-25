@@ -190,6 +190,12 @@
     font-size: 1.25rem;
     font-family: 'Bitter', serif;
 }
+.bet-container h2 {
+    font-family: 'Bitter', serif;
+}
+#chips-wagered {
+    font-family: 'Bitter', serif;
+}
 .player-container {
     border: 1px solid blue;
 }
@@ -221,6 +227,12 @@
     align-items: center;
     justify-content: center;
 }
+.total-chips-container h2 {
+    font-family: 'Bitter', serif;
+}
+#total-chips {
+    font-family: 'Bitter', serif;
+}
 .deal-container {
     border: 2px solid black;
     display: flex;
@@ -228,7 +240,16 @@
     align-items: center;
     text-align: center;
 }
+.deal-container-inner h2 {
+    font-family: 'Bitter', serif;
+}
 #deal-button {
     padding:10px 25px;
     font-size: 1.5rem;
+    font-family: 'Bitter', serif;
+}
+#winner {
+    display: none;
+    font-family: 'Bitter', serif;
+    text-align: center;
 }

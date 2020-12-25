@@ -10,6 +10,7 @@ const playerTotalSpan = document.getElementById('player-total');
 const hitButton = document.getElementById('hit-button');
 const standButton = document.getElementById('stand-button');
 const dealButton = document.getElementById('deal-button');
+const winner = document.getElementById('winner');
 
 const dealerNewCardSection = document.querySelector('.dealer-new-cards');
 
@@ -37,6 +38,9 @@ let shuffledArrPlayer;
 
 let timer;
 
+hitButton.disabled = true;
+standButton.disabled = true;
+
 const getChipsWagered = () => {
     chips.forEach(index => {
         index.addEventListener('click', () => {
@@ -46,12 +50,15 @@ const getChipsWagered = () => {
             chipsWagered.textContent = currentChip;
             totalChips.textContent = playerTotalChips;
             console.log(playerTotalChips + ' Chips Left')
+
             if(playerTotalChips < 1) {
-                alert('No More Chips')
+                // alert('No More Chips')
                 playerTotalChips = 0;
+                currentChip = currentChip * 1
                 totalChips.textContent = playerTotalChips;
+                chipsWagered.textContent = currentChip;
+                chips.forEach(btn => btn.disabled = true)
             }
-            console.log(currentChip + ' Chips Wagered')
         })
     })
 }
@@ -164,7 +171,6 @@ const shuffleCardsPlayer = (a) => {
     if( playerCard1.includes('7') ) playerCard1Value = 7;
     if( playerCard1.includes('8') ) playerCard1Value = 8;
     if( playerCard1.includes('9') ) playerCard1Value = 9;
-    // console.log('players 1st card: ' + playerCard1Value)
 
     if( playerCard2.includes('king') || playerCard2.includes('queen') || playerCard2.includes('jack') ) playerCard2Value = 10;
     if( playerCard2.includes('ace') ) playerCard2Value = 11 || 1;
@@ -176,7 +182,6 @@ const shuffleCardsPlayer = (a) => {
     if( playerCard2.includes('7') ) playerCard2Value = 7;
     if( playerCard2.includes('8') ) playerCard2Value = 8;
     if( playerCard2.includes('9') ) playerCard2Value = 9;
-    // console.log('players 2nd card: ' + playerCard2Value)
 
     playerCardsSection.innerHTML += `
     <img src="./assets/photos/cards/${shuffledArrPlayer[0]}.png" class="cards">
@@ -194,8 +199,6 @@ const shuffleCardsPlayer = (a) => {
     // console.log('Player has: ' + playerTotal)
     playerTotalSpan.textContent = playerTotal;
 }
-// shuffleCardsPlayer(cardsArray)
-
 
 //Create function that gets a card if hit is pressed
 hitButton.addEventListener('click', () => {
@@ -216,13 +219,19 @@ hitButton.addEventListener('click', () => {
     playerTotalSpan.textContent = playerTotal;
 
     if(playerTotal === 21) {
+        chips.forEach(btn => btn.disabled = false)
         alert('BLACKJACK');
         const cardFront = document.getElementById('card')
         cardFront.style.transform = 'rotateY(180deg)'
         dealerTotalSpan.textContent = dealerTotal;
         playerTotalChips += (currentChip * 2);
         totalChips.textContent = playerTotalChips;
-
+        currentChip = 0;
+        chipsWagered.textContent = currentChip;
+        winner.style.display = 'block'
+        winner.textContent = `Player Has Won!`
+        hitButton.disabled = true;
+        standButton.disabled = true;
         if(dealerTotal !== 21) {
             selectedChip = 0;
             chipsWagered.textContent = selectedChip;
@@ -230,12 +239,17 @@ hitButton.addEventListener('click', () => {
     }
 
     else if(playerTotal > 21) {
+        chips.forEach(btn => btn.disabled = false)
         console.log('You Have Went Over 21')
         alert('You have busted!')
         selectedChip = 0;
         chipsWagered.textContent = selectedChip;
-        playerTotalChips = playerTotalChips + (currentChip * 2);
-        totalChips.textContent = playerTotalChips;
+        // playerTotalChips = playerTotalChips + (currentChip * 2);
+        // totalChips.textContent = playerTotalChips;
+        winner.style.display = 'block'
+        winner.textContent = `Dealer Has Won!`
+        hitButton.disabled = true;
+        standButton.disabled = true;
     }
 })
 
@@ -273,6 +287,7 @@ standButton.addEventListener('click', () => {
     dealerTotalSpan.textContent = dealerTotal;
 
     if(dealerTotal < 17) {
+        chips.forEach(btn => btn.disabled = false)
         drawCardDealer(dealerTotal)
     }
     
@@ -281,42 +296,83 @@ standButton.addEventListener('click', () => {
 
     if(dealerTotal === 21) {
         alert('Dealer Has Hit BlackJack!');
+        chips.forEach(btn => btn.disabled = false)
         selectedChip = 0;
         chipsWagered.textContent = selectedChip;
+        winner.style.display = 'block'
+        winner.textContent = `Dealer Has Won!`
+        hitButton.disabled = true;
+        standButton.disabled = true;
     }
     else if (dealerTotal > 21) {
         console.log('Dealer Lost')
+        chips.forEach(btn => btn.disabled = false)
         selectedChip = 0;
         chipsWagered.textContent = selectedChip;
         playerTotalChips = playerTotalChips + (currentChip * 2);
         totalChips.textContent = playerTotalChips;
+        winner.style.display = 'block'
+        winner.textContent = `Player Has Won!`
+        hitButton.disabled = true;
+        standButton.disabled = true;
     } 
     else if ( playerTotal > dealerTotal) {
         console.log('Player Won!!')
+        chips.forEach(btn => btn.disabled = false)
         playerTotalChips = playerTotalChips + (currentChip * 2);
         selectedChip = 0;
         totalChips.textContent = playerTotalChips;
         chipsWagered.textContent = selectedChip
+        winner.style.display = 'block'
+        winner.textContent = `Player Has Won!`
+        hitButton.disabled = true;
+        standButton.disabled = true;
     }
     else if(dealerTotal === playerTotal) {
         console.log('TIE')
+        chips.forEach(btn => btn.disabled = false)
         selectedChip = 0;
         chipsWagered.textContent = selectedChip;
         playerTotalChips = playerTotalChips + currentChip;
         totalChips.textContent = playerTotalChips;
+        winner.style.display = 'block'
+        winner.textContent = `TIE!`
     }
     else if(dealerTotal > playerTotal && dealerTotal <= 21 ){
         console.log('Dealer Won!');
+        chips.forEach(btn => btn.disabled = false)
         currentChip = 0;
         chipsWagered.textContent = currentChip;
+        winner.style.display = 'block'
+        winner.textContent = `Dealer Has Won!`
+        hitButton.disabled = true;
+        standButton.disabled = true;
     }
 })
 
 startButton.addEventListener('click', () => {
-    if(currentChip !== 0) {
+    hitButton.disabled = false;
+    standButton.disabled = false;
+    if(currentChip !== 0 ) {
+        chips.forEach(btn => btn.disabled = true)
         restart();
         shuffleCardsDealer(cardsArray)
         shuffleCardsPlayer(cardsArray)
+        if(playerTotal === 21) {
+            alert('BLACKJACK');
+            const cardFront = document.getElementById('card')
+            cardFront.style.transform = 'rotateY(180deg)'
+            dealerTotalSpan.textContent = dealerTotal;
+            playerTotalChips += (currentChip * 2);
+            totalChips.textContent = playerTotalChips;
+            currentChip = 0;
+            chipsWagered.textContent = currentChip;
+            chips.forEach(btn => btn.disabled = false)
+            winner.style.display = 'block'
+            winner.textContent = `Player Has Won!`
+            hitButton.disabled = true;
+            standButton.disabled = true;
+        }
     } else {
         alert('Place A Bet')
     }
@@ -327,6 +383,11 @@ restartButton.addEventListener('click', () => {
     playerCardsSection.innerHTML = '';
     dealerTotalSpan.innerHTML = '';
     playerTotalSpan.innerHTML = '';
+    chipsWagered.innerHTML = 0;
+    chips.forEach(btn => btn.disabled = false)
+    winner.style.display = 'none'
+    hitButton.disabled = true;
+    standButton.disabled = true;
 })
 
 const restart = () => {
@@ -336,4 +397,5 @@ const restart = () => {
     playerTotalSpan.innerHTML = '';
     dealerTotal = 0;
     playerTotal = 0;
+    winner.style.display = 'none'
 }
