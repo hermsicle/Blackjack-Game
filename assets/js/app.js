@@ -45,9 +45,13 @@ const getChipsWagered = () => {
             playerTotalChips = playerTotalChips - selectedChip;
             chipsWagered.textContent = currentChip;
             totalChips.textContent = playerTotalChips;
-            console.log(selectedChip)
-            console.log(playerTotalChips)
-            console.log(currentChip)
+            console.log(playerTotalChips + ' Chips Left')
+            if(playerTotalChips < 1) {
+                alert('No More Chips')
+                playerTotalChips = 0;
+                totalChips.textContent = playerTotalChips;
+            }
+            console.log(currentChip + ' Chips Wagered')
         })
     })
 }
@@ -298,13 +302,13 @@ standButton.addEventListener('click', () => {
         console.log('TIE')
         selectedChip = 0;
         chipsWagered.textContent = selectedChip;
-        playerTotalChips = playerTotalChips + (currentChip * 2);
+        playerTotalChips = playerTotalChips + currentChip;
         totalChips.textContent = playerTotalChips;
     }
     else if(dealerTotal > playerTotal && dealerTotal <= 21 ){
         console.log('Dealer Won!');
         currentChip = 0;
-        chipsWagered.textContent = selectedChip;
+        chipsWagered.textContent = currentChip;
     }
 })
 
