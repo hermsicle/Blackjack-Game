@@ -45,11 +45,12 @@ const getChipsWagered = () => {
     chips.forEach(index => {
         index.addEventListener('click', () => {
             selectedChip = parseInt(index.innerHTML);
+            // console.log(selectedChip)
             currentChip = selectedChip + currentChip;
             playerTotalChips = playerTotalChips - selectedChip;
             chipsWagered.textContent = currentChip;
             totalChips.textContent = playerTotalChips;
-            console.log(playerTotalChips + ' Chips Left')
+            // console.log(playerTotalChips + ' Chips Left')
 
             if(playerTotalChips < 1) {
                 // alert('No More Chips')
