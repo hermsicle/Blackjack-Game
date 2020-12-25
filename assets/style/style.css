@@ -172,18 +172,17 @@
 .flip-container .card .card-front {
     transition: all 0.5s ease-out;
 }
-
 .bet-container {
-    /* border: 2px solid black; */
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 .bet-container .bet-button {
     padding: 10px 25px;
-    width: 200px;
+    width: 150px;
     font-size: 1.25rem;
     font-family: 'Bitter', serif;
+    cursor: pointer;
 }
 .bet-container h2 {
     font-family: 'Bitter', serif;
@@ -257,6 +256,7 @@
     padding:10px 25px;
     font-size: 1.5rem;
     font-family: 'Bitter', serif;
+    cursor: pointer;
 }
 #winner {
     display: none;
@@ -265,9 +265,13 @@
 }
 #restartButton {
     padding: 10px 25px;
-    font-size: 1.25rem;
     font-family: 'Bitter', serif;
     margin: 0 auto;
     display: flex;
     align-items: center;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    outline: none;
+    border: none;
 }

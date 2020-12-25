@@ -400,6 +400,7 @@ restartButton.addEventListener('click', () => {
     hitButton.disabled = true;
     standButton.disabled = true;
     startButton.disabled = false;
+    currentChip = 0;
 })
 
 const restart = () => {
