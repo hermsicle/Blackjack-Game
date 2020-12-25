@@ -196,6 +196,7 @@ const shuffleCardsPlayer = (a) => {
         dealerTotalSpan.textContent = dealerTotal;
         playerTotalChips = playerTotalChips + (selectedChip * 2);
         totalChips.textContent = playerTotalChips;
+        startButton.disabled = false;
     }
     // console.log('Player has: ' + playerTotal)
     playerTotalSpan.textContent = playerTotal;
@@ -221,7 +222,7 @@ hitButton.addEventListener('click', () => {
 
     if(playerTotal === 21) {
         chips.forEach(btn => btn.disabled = false)
-        alert('BLACKJACK');
+        // alert('BLACKJACK');
         const cardFront = document.getElementById('card')
         cardFront.style.transform = 'rotateY(180deg)'
         dealerTotalSpan.textContent = dealerTotal;
@@ -233,6 +234,7 @@ hitButton.addEventListener('click', () => {
         winner.textContent = `Player Has Won!`
         hitButton.disabled = true;
         standButton.disabled = true;
+        startButton.disabled = false;
         if(dealerTotal !== 21) {
             selectedChip = 0;
             chipsWagered.textContent = selectedChip;
@@ -243,14 +245,14 @@ hitButton.addEventListener('click', () => {
         chips.forEach(btn => btn.disabled = false)
         console.log('You Have Went Over 21')
         alert('You have busted!')
+        
         selectedChip = 0;
         chipsWagered.textContent = selectedChip;
-        // playerTotalChips = playerTotalChips + (currentChip * 2);
-        // totalChips.textContent = playerTotalChips;
         winner.style.display = 'block'
         winner.textContent = `Dealer Has Won!`
         hitButton.disabled = true;
         standButton.disabled = true;
+        startButton.disabled = false;
     }
 })
 
@@ -296,7 +298,7 @@ standButton.addEventListener('click', () => {
     console.log('Player Total Is: ' + playerTotal)
 
     if(dealerTotal === 21) {
-        alert('Dealer Has Hit BlackJack!');
+        // alert('Dealer Has Hit BlackJack!');
         chips.forEach(btn => btn.disabled = false)
         selectedChip = 0;
         chipsWagered.textContent = selectedChip;
@@ -304,6 +306,7 @@ standButton.addEventListener('click', () => {
         winner.textContent = `Dealer Has Won!`
         hitButton.disabled = true;
         standButton.disabled = true;
+        startButton.disabled = false;
     }
     else if (dealerTotal > 21) {
         console.log('Dealer Lost')
@@ -316,6 +319,7 @@ standButton.addEventListener('click', () => {
         winner.textContent = `Player Has Won!`
         hitButton.disabled = true;
         standButton.disabled = true;
+        startButton.disabled = false;
     } 
     else if ( playerTotal > dealerTotal) {
         console.log('Player Won!!')
@@ -328,6 +332,7 @@ standButton.addEventListener('click', () => {
         winner.textContent = `Player Has Won!`
         hitButton.disabled = true;
         standButton.disabled = true;
+        startButton.disabled = false;
     }
     else if(dealerTotal === playerTotal) {
         console.log('TIE')
@@ -338,6 +343,7 @@ standButton.addEventListener('click', () => {
         totalChips.textContent = playerTotalChips;
         winner.style.display = 'block'
         winner.textContent = `TIE!`
+        startButton.disabled = false;
     }
     else if(dealerTotal > playerTotal && dealerTotal <= 21 ){
         console.log('Dealer Won!');
@@ -348,19 +354,20 @@ standButton.addEventListener('click', () => {
         winner.textContent = `Dealer Has Won!`
         hitButton.disabled = true;
         standButton.disabled = true;
+        startButton.disabled = false;
     }
 })
 
 startButton.addEventListener('click', () => {
     hitButton.disabled = false;
     standButton.disabled = false;
+    startButton.disabled = true;
     if(currentChip !== 0 ) {
         chips.forEach(btn => btn.disabled = true)
         restart();
         shuffleCardsDealer(cardsArray)
         shuffleCardsPlayer(cardsArray)
         if(playerTotal === 21) {
-            alert('BLACKJACK');
             const cardFront = document.getElementById('card')
             cardFront.style.transform = 'rotateY(180deg)'
             dealerTotalSpan.textContent = dealerTotal;
@@ -376,6 +383,9 @@ startButton.addEventListener('click', () => {
         }
     } else {
         alert('Place A Bet')
+        hitButton.disabled = true;
+        standButton.disabled = true;
+        startButton.disabled = false;
     }
 })
 
@@ -389,6 +399,7 @@ restartButton.addEventListener('click', () => {
     winner.style.display = 'none'
     hitButton.disabled = true;
     standButton.disabled = true;
+    startButton.disabled = false;
 })
 
 const restart = () => {

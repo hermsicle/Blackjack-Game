@@ -130,7 +130,6 @@
     border-radius: 50px;
     border: 10px solid black;
 }
-
 .cards {
     height: 150px;
     width: 100px;
@@ -140,14 +139,18 @@
 .container {
     margin: 10px auto;
     width: 500px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 .dealer-cards-container {
     display: flex;
     height: 150px;
 }
+.dealer-container-inner {
+    border: 1px solid black;
+}
 .dealer-container-inner h2 {
     font-family: 'Bitter', serif;
+    margin: 10px;
 }
 
 /* Dealer flip card */
@@ -188,8 +191,12 @@
 #chips-wagered {
     font-family: 'Bitter', serif;
 }
+.player-container-inner {
+    border: 1px solid black;
+}
 .player-container-inner h2 {
     font-family: 'Bitter', serif;
+    margin: 10px;
 }
 .player-cards-container {
     display: flex;
@@ -208,6 +215,7 @@
     font-family: 'Bitter', serif;
     border: dotted;
     outline: none;
+    margin: 10px;
 }
 .chips-5 {
     background-color: red;
@@ -240,15 +248,10 @@
     margin: 10px;
 }
 .deal-container {
-    /* border: 2px solid black; */
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-}
-.deal-container-inner h2 {
-    font-family: 'Bitter', serif;
-    margin: 10px;
 }
 #deal-button {
     padding:10px 25px;
